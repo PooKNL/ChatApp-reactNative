@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -20,11 +23,11 @@ export default StyleSheet.create({
   button: {
     height: 36,
     backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC'
+    borderColor: '#48BBEC',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
-    alignSelf: 'stretch'
-    justifyContent: 'center'
+    alignSelf: 'stretch',
+    justifyContent: 'center',
   },
 });

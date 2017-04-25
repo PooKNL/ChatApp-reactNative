@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
 import t from 'tcomb-form-native';
 import Person, { formOptions } from '../models/Person';
-import { View, Text, TouchableHighLight } from 'react-native';
+import { View, Text, TouchableHighlight, KeyboardAvoidingView } from 'react-native';
 import styles from './SignUp.styles';
 
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
 
+    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+    this.state = { newUser: null };
+  }
+
+  componentDidMount() {
+    // focus on the "name" field
+    this.refs.form.getComponent('name').refs.input.focus();
+  }
+
+  clearForm() {
+    this.setState({ newUser: null });
+  }
+
+  onChange(newUser) {
+    this.setState({ newUser });
   }
 
   onSubmit() {
@@ -17,28 +32,34 @@ export default class SignUp extends Component {
     const newUser = form.getValue();
     if (!newUser) return;
     console.log(newUser);
+    this.clearForm();
   }
-
 
   render() {
     const Form = t.form.Form;
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Sign up for ShatApp</Text>
+      <View style={styles.outerContainer}>
+        <KeyboardAvoidingView
+          behavior="padding"
+          style={styles.container}>
+          <Text style={styles.title}>Sign up for RJApp</Text>
 
-        <Form
-          ref="form"
-          type={Person}
-          options={formOptions} />
+          <Form
+            ref="form"
+            type={Person}
+            options={formOptions}
+            value={this.state.newUser}
+            onChange={this.onChange} />
 
-        <TouchableHighLight
-          style={styles.button}
-          onPress={this.onSubmit}
-          underlayColor="99d9f4"
-        >
-          <Text style={styles.buttonText}>Sign up</Text>
-        </TouchableHighLight>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={this.onSubmit}
+            underlayColor='#99d9f4'
+          >
+            <Text style={styles.buttonText}>Sign up</Text>
+            </TouchableHighlight>
+        </KeyboardAvoidingView>
       </View>
     );
   }
